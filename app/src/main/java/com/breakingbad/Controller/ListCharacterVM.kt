@@ -1,6 +1,7 @@
 package com.breakingbad.Controller
 
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.breakingbad.Model.Character
@@ -25,7 +26,7 @@ class ListCharacterVM {
     private var serviceApi: BreakingBadAPI
 
     init {
-        _characters.value = ArrayList<Character>()
+        _characters.value = ArrayList()
 
         val retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
@@ -33,6 +34,10 @@ class ListCharacterVM {
             .build()
 
         serviceApi = retrofit.create(BreakingBadAPI::class.java)
+        fetchData()
+    }
+
+    fun refreshData() {
         fetchData()
     }
 
@@ -44,7 +49,7 @@ class ListCharacterVM {
                 _characters.value = response.body()
             }
             override fun onFailure(call: Call<List<Character>>, t: Throwable) {
-                error("KO")
+                _characters.value = null
             }
         })
     }
