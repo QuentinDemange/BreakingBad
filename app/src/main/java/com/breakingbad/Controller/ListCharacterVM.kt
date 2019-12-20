@@ -12,7 +12,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
-class CharacterVM {
+class ListCharacterVM {
 
     private val _characters: MutableLiveData<List<Character>> by lazy {
         MutableLiveData<List<Character>>()
@@ -33,10 +33,10 @@ class CharacterVM {
             .build()
 
         serviceApi = retrofit.create(BreakingBadAPI::class.java)
-        refresh()
+        fetchData()
     }
 
-    private fun refresh() {
+    private fun fetchData() {
         val characterRequest = serviceApi.getCharacters()
 
         characterRequest.enqueue(object : Callback<List<Character>> {
@@ -47,9 +47,5 @@ class CharacterVM {
                 error("KO")
             }
         })
-    }
-
-    public fun refreshData() {
-        refresh()
     }
 }

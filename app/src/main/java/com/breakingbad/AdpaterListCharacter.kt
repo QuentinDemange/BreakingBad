@@ -50,6 +50,10 @@ class AdapterListCharacter(private val items : List<Character>, private val cont
         holder.name.text = character.name
         holder.nickname.text = character.nickname
         holder.portrayed.text = character.portrayed
+
+        holder.view.setOnClickListener {
+            onclick(character)
+        }
     }
 
 
